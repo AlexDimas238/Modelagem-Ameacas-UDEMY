@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://owasp.org/www-community/Threat_Modeling_Process -->
+<html lang="pt" class="translated-ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+
+
+
+<meta name="description" content="Threat Modeling Process on the main website for The OWASP Foundation. OWASP is a nonprofit foundation that works to improve the security of software.">
+<meta property="og:description" content="Threat Modeling Process on the main website for The OWASP Foundation. OWASP is a nonprofit foundation that works to improve the security of software.">
+<meta propery="og:title" content="Threat Modeling Process | OWASP Foundation">
+<meta property="og:url" content="https://owasp.org/www-community/Threat_Modeling_Process">
+<meta property="og:locale" content="en_US">
+
+<!-- should probably look at using article at some point for www-community at least -->
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://owasp.org/www--site-theme/favicon.ico">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+
+<link rel="canonical" href="https://owasp.org/www-community/Threat_Modeling_Process">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4531126-1"></script> -->
+<!-- <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-4531126-1');
+</script> -->
+<!-- Google Analytics -->
+
+
+<script src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/js.cookie.js.download"></script>
+<script>
+  if(Cookies.get('cookies-ok') == 'true' && window.ga === undefined)
+  {
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-4531126-1', 'auto');
+    ga('send', 'pageview');
+  }
+  else if (Cookies.get('cookies-ok') == 'true')
+  {
+    ga('send', 'pageview');
+  }
+
+  function handleOutboundLinkClicks(event) {
+    var href = '';
+    if(event.target.href == undefined)
+      href = event.target.parentElement.href;
+    else
+      href = event.target.href
+  if(Cookies.get('cookies-ok') == 'true'){  
+    
+    ga('send', 'event', {
+      eventCategory: 'Outbound Link',
+      eventAction: 'click',
+      eventLabel: href,
+      transport: 'beacon'
+    });
+  }
+}
+</script>
+<script async="" src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/analytics.js.download"></script>
+<!-- End Google Analytics -->
+<link rel="stylesheet" href="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/styles.css">
+<link rel="shortcut icon" type="images/x-icon" href="https://owasp.org/www--site-theme/favicon.ico">
+
+<script src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/jquery-3.4.1.min.js.download"></script>
+<script src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/util.js.download"></script>
+<script src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/yaml.min.js.download"></script>
+<script src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/luxon.min.js.download"></script>
+<script src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/kjua.min.js.download"></script>
+<title>Processo de Modelagem de Ameaças |  Fundação OWASP</title>
+
+    <script type="text/javascript">
+      $(function(){
+        var baseurl = "https://github.com/OWASP/www-community/blob/master/";
+        var path = "pages/Threat_Modeling_Process.md";
+        $('.repo').html('<a href=' + baseurl + path + '><div class="reset-3c756112--menuItemIcon-206eb252" style="float: left;"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 438.549 438.549" stroke="none" class="icon-7f6730be--text-3f89f380"><g><path d="M409.132 114.573c-19.608-33.596-46.205-60.194-79.798-79.8-33.598-19.607-70.277-29.408-110.063-29.408-39.781 0-76.472 9.804-110.063 29.408-33.596 19.605-60.192 46.204-79.8 79.8C9.803 148.168 0 184.854 0 224.63c0 47.78 13.94 90.745 41.827 128.906 27.884 38.164 63.906 64.572 108.063 79.227 5.14.954 8.945.283 11.419-1.996 2.475-2.282 3.711-5.14 3.711-8.562 0-.571-.049-5.708-.144-15.417a2549.81 2549.81 0 0 1-.144-25.406l-6.567 1.136c-4.187.767-9.469 1.092-15.846 1-6.374-.089-12.991-.757-19.842-1.999-6.854-1.231-13.229-4.086-19.13-8.559-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-.951-2.568-2.098-3.711-3.429-1.142-1.331-1.997-2.663-2.568-3.997-.572-1.335-.098-2.43 1.427-3.289 1.525-.859 4.281-1.276 8.28-1.276l5.708.853c3.807.763 8.516 3.042 14.133 6.851 5.614 3.806 10.229 8.754 13.846 14.842 4.38 7.806 9.657 13.754 15.846 17.847 6.184 4.093 12.419 6.136 18.699 6.136 6.28 0 11.704-.476 16.274-1.423 4.565-.952 8.848-2.383 12.847-4.285 1.713-12.758 6.377-22.559 13.988-29.41-10.848-1.14-20.601-2.857-29.264-5.14-8.658-2.286-17.605-5.996-26.835-11.14-9.235-5.137-16.896-11.516-22.985-19.126-6.09-7.614-11.088-17.61-14.987-29.979-3.901-12.374-5.852-26.648-5.852-42.826 0-23.035 7.52-42.637 22.557-58.817-7.044-17.318-6.379-36.732 1.997-58.24 5.52-1.715 13.706-.428 24.554 3.853 10.85 4.283 18.794 7.952 23.84 10.994 5.046 3.041 9.089 5.618 12.135 7.708 17.705-4.947 35.976-7.421 54.818-7.421s37.117 2.474 54.823 7.421l10.849-6.849c7.419-4.57 16.18-8.758 26.262-12.565 10.088-3.805 17.802-4.853 23.134-3.138 8.562 21.509 9.325 40.922 2.279 58.24 15.036 16.18 22.559 35.787 22.559 58.817 0 16.178-1.958 30.497-5.853 42.966-3.9 12.471-8.941 22.457-15.125 29.979-6.191 7.521-13.901 13.85-23.131 18.986-9.232 5.14-18.182 8.85-26.84 11.136-8.662 2.286-18.415 4.004-29.263 5.146 9.894 8.562 14.842 22.077 14.842 40.539v60.237c0 3.422 1.19 6.279 3.572 8.562 2.379 2.279 6.136 2.95 11.276 1.995 44.163-14.653 80.185-41.062 108.068-79.226 27.88-38.161 41.825-81.126 41.825-128.906-.01-39.771-9.818-76.454-29.414-110.049z"></path></g></svg><span style="padding-left:8px;">Edit on GitHub</span></div></a>');
+      });
+    </script>
+    <script async="" defer="" src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/buttons.js.download"></script>
+  <link type="text/css" rel="stylesheet" charset="UTF-8" href="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/translateelement.css"></head>
+  <body class="base-grid col-sidebar">
+
+    <div id="blocker"></div>
+
+    <noscript>For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://turnonjs.com/"> instructions how to enable JavaScript in your web browser</a>.</noscript>
+    <header role="banner">
+  <div id="banner" class="notice" aria-label="anúncio"><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Apoie a missão OWASP de melhorar a segurança de software por meio de iniciativas de código aberto e educação da comunidade. </font></font><a href="https://owasp.org/donate/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DOE agora!</font></font></a></p><a href="https://owasp.org/www-community/Threat_Modeling_Process#" id="close-banner" aria-label="fechar anúncio" style="float:right;"><i class="fa fa-times"></i></a></div>
+
+
+
+
+<style>
+  #banner img {
+    max-width: 30em;
+  }
+
+  @media (max-width: 1131px) {
+    #banner img {
+      max-width: 30em;
+    }
+  }
+
+  @media (max-width: 800px) {
+    #banner img {
+      max-width: 20em;
+    }
+  }
+
+  @media (max-width: 600px) {
+    #banner img {
+      max-width: 20em;
+    }
+  }
+
+  @media (max-width: 450px) {
+    #banner img {
+      max-width: 250px;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+  $(function () {
+    var bannerdata = [];
+    banneryaml = YAML.load('https://owasp.org/www-community/assets/sitedata/banner-data.yml');
+    $.each(banneryaml, function (index) {
+      bannerdata.push(this);
+    });
+
+    if (bannerdata.length > 0) {
+      var htmlstring = "";
+      var usebanner = null;
+      var defbanner = null;
+      var checkdate = new Date(); //local time but who cares about the time?
+      bannerdata.forEach(data => {
+        if (data.start) {
+          var start = data.start;
+
+          if (data.start <= checkdate) {
+            if (data.end) {
+
+              var end = data.end;
+              if (checkdate < end) {
+                usebanner = data;
+              }
+            }
+            else
+              usebanner = data;
+          }
+        }
+        else {
+          defbanner = data;
+        }
+      });
+
+      if (defbanner && !usebanner)
+        usebanner = defbanner;
+      if (usebanner) {
+        htmlstring = usebanner.text;
+        htmlstring += "<a href='#' id='close-banner' aria-label='close announcement' style='float:right;'><i class='fa fa-times'></i></a>";
+
+        $("#banner").html(htmlstring);
+        $("#banner").removeClass("notice");
+        $("#banner").addClass(usebanner.type);
+
+        $("#close-banner").click(function() {
+          $(this).closest("#banner").remove();
+            Cookies.set('banner-seen', 'true', { expires: 7 });
+        });
+      }
+    }
+  });
+</script>
+  <div id="popup" class="notice" aria-label="anúncio" style="display: none;">
+   
+</div>
+
+
+
+
+<style>
+  #banner img {
+    max-width: 30em;
+  }
+
+  @media (max-width: 1131px) {
+    #banner img {
+      max-width: 30em;
+    }
+  }
+
+  @media (max-width: 800px) {
+    #banner img {
+      max-width: 20em;
+    }
+    #popup {
+      visibility: hidden;
+    }
+  }
+
+  @media (max-width: 600px) {
+    #popup {
+      visibility: hidden;
+    }
+    #banner img {
+      max-width: 20em;
+    }
+  }
+
+  @media (max-width: 450px) {
+    #banner img {
+      max-width: 250px;
+    }
+    #popup {
+      visibility: hidden;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+  $(function () {
+    var popdata = [];
+    $("#popup").hide();
+    popyaml = YAML.load('https://owasp.org/www-community/assets/sitedata/popup-data.yml');
+    $.each(popyaml, function (index) {
+      popdata.push(this);
+    });
+
+    if (popdata.length > 0) {
+      var htmlstring = "";
+      var usepop = null;
+      var defpop = null;
+      var checkdate = new Date(); //local time but who cares about the time?
+      popdata.forEach(data => {
+        if (data.start) {
+          var start = data.start;
+
+          if (data.start <= checkdate) {
+            if (data.end) {
+
+              var end = data.end;
+              if (checkdate < end) {
+                usepop = data;
+              }
+            }
+            else
+              usepop = data;
+          }
+        }
+        else {
+          defpop = data;
+        }
+      });
+
+      if (defpop && !usepop)
+        usepop = defpop;
+      if (usepop) {
+        htmlstring = usepop.text;
+        htmlstring += "<a href='#' id='close-popup' aria-label='close announcement' style='float:right;'><i class='fa fa-times'></i></a>";
+
+        $("#popup").html(htmlstring);
+        $("#popup").removeClass("notice");
+        $("#popup").addClass(usepop.type);
+        
+        if( Cookies.get('popup-seen')!='true')
+        {
+          $("#popup").show();
+        }
+
+        $("#close-popup").click(function() {
+          $(this).closest("#popup").remove();
+            Cookies.set('popup-seen', 'true', { expires: 7 });
+        });
+      }
+    }
+  });
+</script>
+  <div class="header-wrapper" aria-label="Navegação Principal">
+    <nav class="alt-nav">
+      <a href="https://owasp.org/www-community/Threat_Modeling_Process#" class="menu-toggler" aria-hidden="true">
+        <i class="fa fa-bars"></i>
+      </a>
+      <a href="https://owasp.org/" class="alt-logo" aria-label="vá para a página inicial">
+          <img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/logo.png" alt="logo OWASP">
+      </a>
+      <div id="overlay" class="remove-el">
+
+      </div><ul class="mobile-menu hide-el" role="navigation" aria-label="navegação primária móvel"><li><a href="https://owasp.org/www-community/Threat_Modeling_Process#" class="menu-toggler" aria-hidden="true"><i class="fa fa-times"></i></a></li><li><form role="search" method="get" action="https://owasp.org/search"><div class="search-div"><input id="searchString" aria-label="entrada de pesquisa" name="searchString" class="search-bar" type="search" placeholder="Pesquisar OWASP.org" required="true"><button id="search-button" aria-label="botão de pesquisa" type="submit" class="fa fa-search" style="padding-left: 8px;"></button></div></form></li><button class="accordion"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PROJETOS</font></font></button><div class="panel"><ul><li><a href="https://owasp.org/projects/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Procurar todos os projetos...</font></font></a></li><li class="separator"><a href="https://owasp.org/www-project-top-ten/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">OWASP Top Ten</font></font></a></li><li><a href="https://owasp.org/www-project-dependency-track/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Controle de Dependência</font></font></a></li><li><a href="https://owasp.org/www-project-juice-shop/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">loja de suco</font></font></a></li><li><a href="https://owasp.org/mas/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Segurança de aplicativos móveis</font></font></a></li><li><a href="https://owasp.org/www-project-modsecurity-core-rule-set/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Conjunto de regras principais do ModSecurity</font></font></a></li><li><a href="https://owasp.org/www-project-samm/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modelo de maturidade de garantia de software (SAMM)</font></font></a></li><li><a href="https://owasp.org/www-project-security-knowledge-framework/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Estrutura de conhecimento de segurança</font></font></a></li><li><a href="https://owasp.org/www-project-web-security-testing-guide/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Guia de teste de segurança da Web</font></font></a></li><li><a href="https://owasp.org/www-project-zap/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Proxy de Ataque Zed</font></font></a></li><li class="separator"><a href="https://owasporg.atlassian.net/servicedesk/customer/portal/7/create/70?src=-1419759666"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Iniciar um novo projeto...</font></font></a></li><li><a href="https://owasp.org/gsoc/gsoc2021"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Google Summer of Code 2021</font></font></a></li></ul></div><button class="accordion"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CAPÍTULOS</font></font></button><div class="panel"><ul><li><a href="https://owasp.org/chapters/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Encontre um capítulo local...</font></font></a></li><li class="separator"><a href="https://owasp.org/chapters/#Africa"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">África</font></font></a></li><li><a href="https://owasp.org/chapters/#Asia"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ásia</font></font></a></li><li><a href="https://owasp.org/chapters/#TheCarribean"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Caribe</font></font></a></li><li><a href="https://owasp.org/chapters/#CentralAmerica"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">América Central</font></font></a></li><li><a href="https://owasp.org/chapters/#Europe"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Europa</font></font></a></li><li><a href="https://owasp.org/chapters/#NorthAmerica"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">América do Norte</font></font></a></li><li><a href="https://owasp.org/chapters/#Oceania"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Oceânia</font></font></a></li><li><a href="https://owasp.org/chapters/#SouthAmerica"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">América do Sul</font></font></a></li><li class="separator"><a href="https://owasporg.atlassian.net/servicedesk/customer/portal/8/group/20/create/90?src=-1419759666" target="_blank" rel="noopener noreferrer"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Iniciar um capítulo local...</font></font></a></li></ul></div><button class="accordion"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EVENTOS</font></font></button><div class="panel"><ul><li><a href="https://appsec.org.nz/conference" target="_blank" rel="noopener noreferrer">OWASP AppSec NZ</a></li><li><a href="https://whova.com/web/S01MAxzRa49H60XWA6U3vkikTxPUTwLpY4t6Ro00Hx0%3D/" target="_blank" rel="noopener noreferrer">OWASP Global AppSec AsiaPac Virtual 2022</a></li><li><a href="https://www.eventbrite.com/e/247416939727" target="_blank" rel="noopener noreferrer">OWASP September Webinar</a></li><li><a href="https://www.eventbrite.com/e/247450760887" target="_blank" rel="noopener noreferrer">OWASP October Webinar</a></li><li><a href="https://sf.globalappsec.org/" target="_blank" rel="noopener noreferrer">OWASP Global AppSec San Francisco 2022</a></li><li><a href="https://dublin.globalappsec.org/" target="_blank" rel="noopener noreferrer">OWASP Global AppSec Dublin 2023</a></li><li><a href="https://owasp.org/chapters/events/">Upcoming Chapter Events</a></li><li><a href="https://owasp.org/corporate-sponsorships">Event Sponsorship</a></li><li class="separator"><a href="https://owasp.org/events/">Browse All Events...</a></li></ul></div><button class="accordion"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CERCA DE</font></font></button><div class="panel"><ul><li><a href="https://owasp.org/about/">About OWASP</a></li><li><a href="https://owasp.org/careers/">Careers</a></li><li><a href="https://owasp.org/committees/">Committees</a></li><li><a href="https://owasp.org/contact/">Contact Us</a></li><li><a href="https://owasp.org/www-community">Contributed Content</a></li><li><a href="https://owasp.org/supporters/">Corporate Membership</a></li><li><a href="https://owasp.org/donate/">Donate</a></li><li><a href="https://owasp.org/finance/">Finance</a></li><li><a href="https://owasp.org/store">Get OWASP Gear</a></li><li><a href="https://owasp.org/www-board/">Global Board</a></li><li><a href="https://owasp.org/governance/">Governance</a></li><li><a href="https://owasp.org/membership/">Membership</a></li><li><a href="https://members.owasp.org/">Membership Portal</a></li><li><a href="https://owasp.org/news/">Opinions &amp; News</a></li><li><a href="https://owasp.org/www-policy/">Policies</a></li><li><a href="https://owasp.org/corporate/">Staff</a></li><li><a href="https://owasp.org/www-staff/">Staff Projects &amp; Procedures</a></li><li><a href="https://www.youtube.com/user/OWASPGLOBAL/videos" target="_blank" rel="noopener noreferrer">Video</a></li></ul></div><li><a href="https://owasp.org/donate"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">FAÇA UMA DOAÇÃO</font></font></a></li><li><a href="https://owasp.org/membership"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">TORNE-SE UM MEMBRO</font></font></a></li><li><a href="https://owasp.org/sitemap"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MAPA DO SITE</font></font></a></li></ul>
+      <!-- jekyll menu stuff -->
+    </nav>
+    
+    <nav class="top-nav" role="navigation" aria-label="primary navigation">
+      <a href="https://owasp.org/" class="desktop-logo" aria-label="go to homepage">
+        <img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/logo.png" alt="">
+      </a><ul aria-label="header menu"><li><a href="https://owasp.org/projects/">PROJECTS</a><ul class="dropdown-menu"><li><a href="https://owasp.org/projects/">Browse All Projects...</a></li><li class="separator"><a href="https://owasp.org/www-project-top-ten/">OWASP Top Ten</a></li><li><a href="https://owasp.org/www-project-dependency-track/">Dependency Track</a></li><li><a href="https://owasp.org/www-project-juice-shop/">Juice Shop</a></li><li><a href="https://owasp.org/mas/">Mobile Application Security</a></li><li><a href="https://owasp.org/www-project-modsecurity-core-rule-set/">ModSecurity Core Rule Set</a></li><li><a href="https://owasp.org/www-project-samm/">Software Assurance Maturity Model (SAMM)</a></li><li><a href="https://owasp.org/www-project-security-knowledge-framework/">Security Knowledge Framework</a></li><li><a href="https://owasp.org/www-project-web-security-testing-guide/">Web Security Testing Guide</a></li><li><a href="https://owasp.org/www-project-zap/">Zed Attack Proxy</a></li><li class="separator"><a href="https://owasporg.atlassian.net/servicedesk/customer/portal/7/create/70?src=-1419759666">Start a New Project...</a></li><li><a href="https://owasp.org/gsoc/gsoc2021">Google Summer of Code 2021</a></li></ul></li><li><a href="https://owasp.org/chapters/">CHAPTERS</a><ul class="dropdown-menu"><li><a href="https://owasp.org/chapters/">Find a Local Chapter...</a></li><li class="separator"><a href="https://owasp.org/chapters/#Africa">Africa</a></li><li><a href="https://owasp.org/chapters/#Asia">Asia</a></li><li><a href="https://owasp.org/chapters/#TheCarribean">Caribbean</a></li><li><a href="https://owasp.org/chapters/#CentralAmerica">Central America</a></li><li><a href="https://owasp.org/chapters/#Europe">Europe</a></li><li><a href="https://owasp.org/chapters/#NorthAmerica">North America</a></li><li><a href="https://owasp.org/chapters/#Oceania">Oceania</a></li><li><a href="https://owasp.org/chapters/#SouthAmerica">South America</a></li><li class="separator"><a href="https://owasporg.atlassian.net/servicedesk/customer/portal/8/group/20/create/90?src=-1419759666" target="_blank" rel="noopener noreferrer">Start a Local Chapter...</a></li></ul></li><li><a href="https://owasp.org/events/">EVENTS</a><ul class="dropdown-menu"><li><a href="https://appsec.org.nz/conference" target="_blank" rel="noopener noreferrer">OWASP AppSec NZ</a></li><li><a href="https://whova.com/web/S01MAxzRa49H60XWA6U3vkikTxPUTwLpY4t6Ro00Hx0%3D/" target="_blank" rel="noopener noreferrer">OWASP Global AppSec AsiaPac Virtual 2022</a></li><li><a href="https://www.eventbrite.com/e/247416939727" target="_blank" rel="noopener noreferrer">OWASP September Webinar</a></li><li><a href="https://www.eventbrite.com/e/247450760887" target="_blank" rel="noopener noreferrer">OWASP October Webinar</a></li><li><a href="https://sf.globalappsec.org/" target="_blank" rel="noopener noreferrer">OWASP Global AppSec San Francisco 2022</a></li><li><a href="https://dublin.globalappsec.org/" target="_blank" rel="noopener noreferrer">OWASP Global AppSec Dublin 2023</a></li><li><a href="https://owasp.org/chapters/events/">Upcoming Chapter Events</a></li><li><a href="https://owasp.org/corporate-sponsorships">Event Sponsorship</a></li><li class="separator"><a href="https://owasp.org/events/">Browse All Events...</a></li></ul></li><li><a href="https://owasp.org/about/">ABOUT</a><ul class="dropdown-menu"><li><a href="https://owasp.org/about/">About OWASP</a></li><li><a href="https://owasp.org/careers/">Careers</a></li><li><a href="https://owasp.org/committees/">Committees</a></li><li><a href="https://owasp.org/contact/">Contact Us</a></li><li><a href="https://owasp.org/www-community">Contributed Content</a></li><li><a href="https://owasp.org/supporters/">Corporate Membership</a></li><li><a href="https://owasp.org/donate/">Donate</a></li><li><a href="https://owasp.org/finance/">Finance</a></li><li><a href="https://owasp.org/store">Get OWASP Gear</a></li><li><a href="https://owasp.org/www-board/">Global Board</a></li><li><a href="https://owasp.org/governance/">Governance</a></li><li><a href="https://owasp.org/membership/">Membership</a></li><li><a href="https://members.owasp.org/">Membership Portal</a></li><li><a href="https://owasp.org/news/">Opinions &amp; News</a></li><li><a href="https://owasp.org/www-policy/">Policies</a></li><li><a href="https://owasp.org/corporate/">Staff</a></li><li><a href="https://owasp.org/www-staff/">Staff Projects &amp; Procedures</a></li><li><a href="https://www.youtube.com/user/OWASPGLOBAL/videos" target="_blank" rel="noopener noreferrer">Video</a></li></ul></li></ul>
+      <!-- jekyll menu stuff -->
+      
+      <div class="interactive-wrapper">
+        <form role="search" method="get" action="https://owasp.org/search">   
+          <div class="search-div">
+            <input id="searchString" name="searchString" class="search-bar" type="search" placeholder="Search OWASP.org" required="true">
+            <button id="search-button" type="submit" class="fa fa-search">
+                <!--<span id="search-icon" tabindex="0"><i class="fa fa-search"></i></span>-->
+            </button>
+          </div>  
+        </form>
+        <div class="nav-button" aria-label="donate to or join OWASP">
+        
+          <a href="https://owasp.org/store" class="cta-button white inset"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Store</a>
+          <a href="https://owasp.org/donate?reponame=www-community" class="cta-button green">Donate</a>
+          <a href="https://owasp.org/membership" class="cta-button">Join</a>
+        </div>
+      </div>
+    </nav>
+    
+  </div>
+  <div class="mobile" style="width:100%;margin:auto;justify-content: space-between;">
+    <div style="float:left;margin:auto;padding-right:10%;"><a href="https://owasp.org/store" class="cta-button white inset"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Store</a></div>
+    <div style="float:left;margin:auto;padding-right:10%;"><a href="https://owasp.org/donate?reponame=www-community" class="cta-button green">Donate</a></div>
+    <div style="float:left;margin:auto;"><a href="https://owasp.org/membership" class="cta-button">Join</a></div>
+  </div>
+
+
+
+<script type="text/javascript">
+  $(function(){
+      
+      url = $(location).attr('href');
+      if(url.includes('www2'))
+      {
+        url = url.replace(/www2./, '');
+        $(location).attr('href',url);
+        return;
+      }
+    // this works to get data from a json file NOT in data
+      $.getJSON("https://owasp.org/www--site-theme/assets/sitedata/menus.json", function(data) {
+         var listr = "<ul aria-label='header menu'>";
+         
+         var mlistr = "<ul class='mobile-menu hide-el' role='navigation' aria-label='mobile primary navigation'>";
+
+          mlistr += "<li><a href='#' class='menu-toggler' aria-hidden='true'><i class='fa fa-times'></i></a></li>";
+          mlistr += "<li>";
+          mlistr += "<form role='search' method='get' action='https://owasp.org/search'>";   
+          mlistr += "<div class='search-div'>";
+          mlistr += "<input id='searchString' aria-label='search input' name='searchString' class='search-bar' type='search' placeholder='Search OWASP.org' required='true'>";
+          mlistr += "<button id='search-button' aria-label='search button' type='submit' class='fa fa-search' style='padding-left: 8px;'></button></div></form>";
+          mlistr += "</li>";
+          $.each(data.menus, function (ndx, menu){
+              listr += "<li><a href='" + menu.url + "'>" + menu.title + "</a>";
+
+              if(!menu.items)
+              {
+                  mlistr += "<li><a href='" + menu.url + "'>" + menu.title + "</a>";
+              }
+              
+              if(menu.items){
+                  listr += "<ul class='dropdown-menu'>";
+                  mlistr += "<button class='accordion'>" + menu.title + "</button>";
+                  mlistr += "<div class='panel'>";
+                  mlistr += "<ul>";
+                $.each(menu.items, function(ndx, item){
+                
+                  if(item.separator)
+                  {
+                      listr += "<li class='separator'>";
+                      mlistr += "<li class='separator'>";
+                  }
+                  else
+                  {
+                      listr += "<li>";
+                      mlistr += "<li>";
+                  }
+                  listr += "<a href='" + item.url + "'";
+                  mlistr += "<a href='" + item.url + "'";
+                  if(item.opentab)
+                  {
+                    listr += " target='_blank' rel='noopener noreferrer'";
+                    mlistr += " target='_blank' rel='noopener noreferrer'";
+                  }
+
+                  listr += ">" + item.title + "</a></li>";
+                  mlistr += ">" + item.title + "</a></li>";
+                });
+                listr += "</ul>";
+                mlistr += "</ul>";
+                mlistr += "</div>"
+              }
+              
+              listr += "</li>";
+              mlistr += "</li>";
+          });
+          listr += "</ul>";
+          mlistr += "<li><a href='https://owasp.org/donate'>MAKE A DONATION</a></li>";
+          mlistr += "<li><a href='https://owasp.org/membership'>BECOME A MEMBER</a></li>";
+          mlistr += "<li><a href='https://owasp.org/sitemap'>SITEMAP</a></li>";
+          mlistr += "</ul>";
+          
+          $('.desktop-logo').after(listr);
+          $('#overlay').after(mlistr);
+
+          $(".accordion").click(function () {
+              $(this).toggleClass("active");
+              if($(this).next('.panel').css('display') == 'block'){
+                $(this).next('.panel').css('display', 'none');
+              }
+              else {
+                $(this).next('.panel').css('display', 'block');
+              }
+            });
+            $(".menu-toggler").click(function() {
+              $(".mobile-menu").toggleClass('hide-el');
+            });
+      });
+    });
+  </script>
+</header>
+
+
+    <main role="main">
+      <div class="main-wrapper">
+        
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+        <h1 class="page-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Processo de Modelagem de Ameaças</font></font></h1>
+        <div id="main" class="page-body tab" role="tabpanel" aria-labelledby="main-link" tabindex="0">
+          
+          <section id="sec-main" class="page-body">
+          <div style="font-size: 75%">
+
+  <b><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Autor:</font></font></b><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Larry Conklin </font></font><br>
+
+
+  <b><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Colaborador(es):</font></font></b><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Victoria Drake, Sven strittmatter</font></font><br>
+
+</div>
+
+<ul>
+  <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#introduction"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Introdução</font></font></a>
+    <ul>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#step-1-decompose-the-application"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Etapa 1: decompor o aplicativo</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#step-2-determine-and-rank-threats"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Passo 2: Determine e Classifique as Ameaças</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#step-3-determine-countermeasures-and-mitigation"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Etapa 3: Determinar contramedidas e mitigação</font></font></a></li>
+    </ul>
+  </li>
+  <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#decompose-the-application"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Decompor o aplicativo</font></font></a>
+    <ul>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#threat-model-information"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Informações do Modelo de Ameaça</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#external-dependencies"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dependências Externas</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#entry-points"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pontos de entrada</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#exit-points"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pontos de saída</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#assets"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bens</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#trust-levels"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Níveis de confiança</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#data-flow-diagrams"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Diagramas de fluxo de dados</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#example-diagrams"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Diagramas de exemplo</font></font></a></li>
+    </ul>
+  </li>
+  <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#determine-and-rank-threats"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Determinar e classificar ameaças</font></font></a>
+    <ul>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#threat-categorization"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Categorização de ameaças</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#stride"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PASSO</font></font></a></li>
+    </ul>
+  </li>
+  <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#stride-threat-list"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista de Ameaças STRIDE</font></font></a>
+    <ul>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#threat-analysis"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Análise de ameaças</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#ranking-of-threats"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Classificação de Ameaças</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#subjective-model-dread"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modelo Subjetivo: DREAM</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#qualitative-risk-model"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modelo Qualitativo de Risco</font></font></a></li>
+    </ul>
+  </li>
+  <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#determine-countermeasures-and-mitigation"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Determinar contramedidas e mitigação</font></font></a>
+    <ul>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#asf-threat--countermeasures-examples"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Exemplos de Ameaças e Contramedidas ASF</font></font></a></li>
+      <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#stride-threat--mitigation-techniques"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Técnicas de Ameaça e Mitigação STRIDE</font></font></a></li>
+    </ul>
+  </li>
+  <li><a href="https://owasp.org/www-community/Threat_Modeling_Process#complementing-code-review"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Complementando a revisão do código</font></font></a></li>
+</ul>
+
+<h2 id="introduction"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Introdução</font></font></h2>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Este documento descreve uma abordagem estruturada para modelagem de ameaças de aplicativos que permite identificar, quantificar e abordar os riscos de segurança associados a um aplicativo.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">A modelagem de ameaças analisa um sistema da perspectiva de um invasor em potencial, em oposição ao ponto de vista de um defensor. </font><font style="vertical-align: inherit;">Tornar a modelagem de ameaças um componente central do seu </font></font><a href="https://en.wikipedia.org/wiki/Systems_development_life_cycle"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SDLC</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> pode ajudar a aumentar a segurança do produto.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O processo de modelagem de ameaças pode ser decomposto em três etapas de alto nível. </font><font style="vertical-align: inherit;">Cada etapa é documentada à medida que é executada. </font><font style="vertical-align: inherit;">O documento resultante é o modelo de ameaça para o aplicativo.</font></font></p>
+
+<h3 id="step-1-decompose-the-application"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Etapa 1: decompor o aplicativo</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">A primeira etapa no processo de modelagem de ameaças está relacionada ao entendimento do aplicativo e como ele interage com entidades externas. </font><font style="vertical-align: inherit;">Isso involve:</font></font></p>
+
+<ul>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Criação de casos de uso para entender como o aplicativo é usado.</font></font></li>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Identificar pontos de entrada para ver onde um invasor em potencial pode interagir com o aplicativo.</font></font></li>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Identificar ativos, ou seja, itens ou áreas em que o invasor estaria interessado.</font></font></li>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Identificar os níveis de confiança que representam os direitos de acesso que a aplicação concederá a entidades externas.</font></font></li>
+</ul>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Essas informações são documentadas em um documento resultante do Modelo de Ameaças. </font><font style="vertical-align: inherit;">Também é usado para produzir diagramas de fluxo de dados ( </font></font><a href="https://en.wikipedia.org/wiki/Data-flow_diagram"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DFDs</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> ) para o aplicativo. </font><font style="vertical-align: inherit;">Os </font></font><a href="https://en.wikipedia.org/wiki/Data-flow_diagram"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DFDs</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> mostram os diferentes caminhos pelo sistema, destacando os limites de privilégio.</font></font></p>
+
+<h3 id="step-2-determine-and-rank-threats"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Passo 2: Determine e Classifique as Ameaças</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O uso de uma metodologia de categorização de ameaças é fundamental para a identificação de ameaças. </font><font style="vertical-align: inherit;">Uma categorização de ameaça como </font></font><a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">STRIDE</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> pode ser usada ou o Application Security Frame (ASF) que define categorias de ameaças como Auditoria e Registro, Autenticação, Autorização, Gerenciamento de Configuração, Proteção de Dados em Armazenamento e Trânsito, Validação de Dados e Gerenciamento de Exceções.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O objetivo da categorização de ameaças é ajudar a identificar ameaças tanto do atacante ( </font></font><a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">STRIDE</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> ) quanto da perspectiva defensiva (ASF). </font></font><a href="https://en.wikipedia.org/wiki/Data-flow_diagram"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Os DFDs</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> produzidos na etapa 1 ajudam a identificar os possíveis alvos de ameaças da perspectiva do invasor, como fontes de dados, processos, fluxos de dados e interações com usuários.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Essas ameaças podem ser classificadas ainda como as raízes das árvores de ameaças; </font><font style="vertical-align: inherit;">há uma árvore para cada meta de ameaça. </font><font style="vertical-align: inherit;">Do ponto de vista defensivo, a categorização ASF ajuda a identificar as ameaças como pontos fracos dos controles de segurança para tais ameaças. </font><font style="vertical-align: inherit;">Listas de ameaças comuns com exemplos podem ajudar na identificação de tais ameaças. </font><font style="vertical-align: inherit;">Casos de uso e abuso podem ilustrar como as medidas de proteção existentes podem ser contornadas ou onde existe falta de tal proteção. </font><font style="vertical-align: inherit;">A determinação do risco de segurança para cada ameaça pode ser feita usando um modelo de risco baseado em valor, como </font></font><a href="https://en.wikipedia.org/wiki/DREAD_(risk_assessment_model)"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DREAD</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> , ou um modelo de risco qualitativo menos subjetivo baseado em fatores de risco gerais (por exemplo, probabilidade e impacto).</font></font></p>
+
+<h3 id="step-3-determine-countermeasures-and-mitigation"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Etapa 3: Determinar contramedidas e mitigação</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Uma vulnerabilidade pode ser mitigada com a implementação de uma contramedida. </font><font style="vertical-align: inherit;">Essas contramedidas podem ser identificadas usando listas de mapeamento de contramedidas de ameaças. </font><font style="vertical-align: inherit;">Depois que uma classificação de risco é atribuída às ameaças na etapa 2, é possível classificar as ameaças do maior ao menor risco e priorizar os esforços de mitigação.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">A estratégia de mitigação de risco pode envolver a avaliação dessas ameaças a partir do impacto nos negócios que representam. </font><font style="vertical-align: inherit;">Uma vez identificado o possível impacto, as opções para lidar com o risco incluem:</font></font></p>
+
+<ul>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceitar: decidir se o impacto nos negócios é aceitável</font></font></li>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eliminar: remover componentes que tornam a vulnerabilidade possível</font></font></li>
+  <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mitigar: adicionar verificações ou controles que reduzam o impacto do risco, ou as chances de sua ocorrência</font></font></li>
+</ul>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">As seções a seguir examinam essas etapas em profundidade e fornecem exemplos do modelo de ameaça resultante em um formato estruturado.</font></font></p>
+
+<h2 id="decompose-the-application"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Decompor o aplicativo</font></font></h2>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O objetivo desta etapa é entender o aplicativo e como ele interage com entidades externas. </font><font style="vertical-align: inherit;">Este objetivo é alcançado pela coleta de informações e documentação. </font><font style="vertical-align: inherit;">O processo de coleta de informações é realizado usando uma estrutura claramente definida, o que garante que as informações corretas sejam coletadas.</font></font></p>
+
+<h3 id="threat-model-information"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Informações do Modelo de Ameaça</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">As informações que identificam o modelo de ameaça geralmente incluem o seguinte:</font></font></p>
+
+<ol>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Application Name</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : O nome do aplicativo examinado.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Versão do aplicativo</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : a versão do aplicativo examinado.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Descrição</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : Uma descrição de alto nível do aplicativo.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Proprietário do documento</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : o proprietário do documento de modelagem de ameaças.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Participantes</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : os participantes envolvidos no processo de modelagem de ameaças para este aplicativo.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Revisor</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : O(s) revisor(es) do modelo de ameaça.</font></font></li>
+</ol>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Exemplo:</font></font></p>
+
+<blockquote>
+  <h2 id="threat-model-information-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Informações do Modelo de Ameaça</font></font></h2>
+
+  <p><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Versão do aplicativo:</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 1.0</font></font></p>
+
+  <p><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Descrição:</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> O site da biblioteca da faculdade é a primeira implementação de um site para fornecer serviços online aos bibliotecários e usuários da biblioteca (estudantes e funcionários da faculdade). </font><font style="vertical-align: inherit;">Como esta é a primeira implementação do site, a funcionalidade será limitada. </font><font style="vertical-align: inherit;">Haverá três usuários do aplicativo:</font></font></p>
+
+  <ol>
+    <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Alunos</font></font></li>
+    <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pessoal</font></font></li>
+    <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bibliotecários</font></font></li>
+  </ol>
+
+  <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Funcionários e alunos poderão fazer login e pesquisar livros, e os membros da equipe podem solicitar livros. </font><font style="vertical-align: inherit;">Os bibliotecários poderão fazer login, adicionar livros, adicionar usuários e pesquisar livros.</font></font></p>
+
+  <p><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Proprietário do documento:</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> David Lowry</font></font></p>
+
+  <p><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Participantes:</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> David Rook</font></font></p>
+
+  <p><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Revisor:</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Eoin Keary</font></font></p>
+</blockquote>
+
+<h3 id="external-dependencies"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dependências Externas</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dependências externas são itens externos ao código do aplicativo que podem representar uma ameaça ao aplicativo. </font><font style="vertical-align: inherit;">Esses itens geralmente ainda estão sob o controle da organização, mas possivelmente não estão sob o controle da equipe de desenvolvimento. </font><font style="vertical-align: inherit;">A primeira área a ser considerada ao investigar as dependências externas é o ambiente de produção e os requisitos.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">É útil entender como o aplicativo deve ou não ser executado. </font><font style="vertical-align: inherit;">Por exemplo, se espera-se que o aplicativo seja executado em um servidor protegido pelo padrão de proteção da organização e que fique atrás de um firewall, essas informações devem ser documentadas na seção de dependências externas.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">As dependências externas devem ser documentadas da seguinte forma:</font></font></p>
+
+<ol>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ID</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : um ID exclusivo atribuído à dependência externa.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Descrição</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : uma descrição textual da dependência externa.</font></font></li>
+</ol>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Exemplo:</font></font></p>
+
+<blockquote>
+  <h2 id="external-dependencies-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dependências Externas</font></font></h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EU IRIA</font></font></th>
+        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Descrição</font></font></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1</font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O site da biblioteca da faculdade será executado em um servidor Linux executando o Apache. </font><font style="vertical-align: inherit;">Este servidor será reforçado de acordo com o padrão de proteção de servidor da faculdade. </font><font style="vertical-align: inherit;">Isso inclui a instalação do sistema operacional mais recente e patches de segurança de aplicativos.</font></font></td>
+      </tr>
+      <tr>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2</font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O servidor de banco de dados será MySQL e rodará em um servidor Linux. </font><font style="vertical-align: inherit;">Este servidor será reforçado de acordo com o padrão de proteção de servidor da faculdade. </font><font style="vertical-align: inherit;">Isso incluirá a instalação do sistema operacional mais recente e dos patches de segurança do aplicativo.</font></font></td>
+      </tr>
+      <tr>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">3</font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">A conexão entre o servidor web e o servidor de banco de dados será através de uma rede privada.</font></font></td>
+      </tr>
+      <tr>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">4</font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O servidor web está atrás de um firewall e a única comunicação disponível é TLS.</font></font></td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<h3 id="entry-points"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pontos de entrada</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Os pontos de entrada definem as interfaces por meio das quais invasores em potencial podem interagir com o aplicativo ou fornecer dados a ele. </font><font style="vertical-align: inherit;">Para que um invasor em potencial ataque um aplicativo, devem existir pontos de entrada. </font><font style="vertical-align: inherit;">Os pontos de entrada em um aplicativo podem ser colocados em camadas. </font><font style="vertical-align: inherit;">Por exemplo, cada página da web em um aplicativo da web pode conter vários pontos de entrada.</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Os pontos de entrada mostram onde os dados entram no sistema (ou seja, campos de entrada, métodos) e os pontos de saída são onde eles saem do sistema (ou seja, saída dinâmica, métodos), respectivamente. </font><font style="vertical-align: inherit;">Os pontos de entrada e saída definem um limite de confiança (consulte </font></font><a href="https://owasp.org/www-community/Threat_Modeling_Process#trust-levels"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Níveis de confiança</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> ).</font></font></p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Os pontos de entrada devem ser documentados da seguinte forma:</font></font></p>
+
+<ol>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ID</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : Um ID exclusivo atribuído ao ponto de entrada. </font><font style="vertical-align: inherit;">Isso será usado para fazer referência cruzada do ponto de entrada com quaisquer ameaças ou vulnerabilidades identificadas. </font><font style="vertical-align: inherit;">No caso de pontos de entrada em camadas, uma notação maior.menor deve ser usada.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nome</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : um nome descritivo que identifica o ponto de entrada e sua finalidade.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Descrição</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : Uma descrição textual detalhando a interação ou processamento que ocorre no ponto de entrada.</font></font></li>
+  <li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Níveis de confiança</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> : o nível de acesso necessário no ponto de entrada. </font><font style="vertical-align: inherit;">Eles serão cruzados com os níveis de confiança definidos posteriormente no documento.</font></font></li>
+</ol>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Exemplo:</font></font></p>
+
+<blockquote>
+  <h2 id="entry-points-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pontos de entrada</font></font></h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">EU IRIA</font></font></th>
+        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nome</font></font></th>
+        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Descrição</font></font></th>
+        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Níveis de confiança</font></font></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1</font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Porta HTTPS</font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">O site da biblioteca da faculdade só estará acessível via TLS. </font><font style="vertical-align: inherit;">Todas as páginas do site da biblioteca da faculdade são colocadas em camadas neste ponto de entrada.</font></font></td>
+        <td>(1) Anonymous Web User <br>(2) User with Valid Login Credentials <br>(3) User with Invalid Login Credentials <br> (4) Librarian</td>
+      </tr>
+      <tr>
+        <td>1.1</td>
+        <td>Library Main Page</td>
+        <td>The splash page for the college library website is the entry point for all users.</td>
+        <td>(1) Anonymous Web User <br>(2) User with Valid Login Credentials <br>(3) User with Invalid Login Credentials <br> (4) Librarian</td>
+      </tr>
+      <tr>
+        <td>1.2</td>
+        <td>Login Page</td>
+        <td>Students, faculty members and librarians must log in to the college library website before they can carry out any of the use cases.</td>
+        <td>(1) Anonymous Web User <br>(2) User with Login Credentials <br>(3) User with Invalid Login Credentials <br> (4) Librarian</td>
+      </tr>
+      <tr>
+        <td>1.2.1</td>
+        <td>Login Function</td>
+        <td>The login function accepts user supplied credentials and compares them with those in the database.</td>
+        <td>(2) User with Valid Login Credentials <br>(3) User with Invalid Login Credentials <br>(4) Librarian</td>
+      </tr>
+      <tr>
+        <td>1.3</td>
+        <td>Search Entry Page</td>
+        <td>The page used to enter a search query.</td>
+        <td>(2) User with Valid Login Credentials <br>(4) Librarian</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<h3 id="exit-points">Exit Points</h3>
+
+<p>Exit points might prove useful when attacking the client: for example, cross-site-scripting vulnerabilities and information disclosure vulnerabilities both require an exit point for the attack to complete.</p>
+
+<p>In the case of exit points from components handling confidential data (e.g. data access components), exit points lacking security controls to protect confidentiality and integrity can lead to disclosure of such confidential information to an unauthorized user.</p>
+
+<p>In many cases threats enabled by exit points are related to the threats of the corresponding entry point. In the login example, error messages returned to the user via the exit point (the log in page) might allow for entry point attacks, such as account harvesting (e.g. username not found), or SQL injection (e.g. SQL exception errors).</p>
+
+<h3 id="assets">Assets</h3>
+
+<p>The system must have something that the attacker is interested in; these items or areas of interest are defined as assets.</p>
+
+<p>Assets are essentially targets for attackers, i.e. they are the reason threats will exist. Assets can be both physical assets and abstract assets. For example, an asset of an application might be a list of clients and their personal information; this is a physical asset. An abstract asset might be the reputation of an organization.</p>
+
+<p>Assets are documented in the threat model as follows:</p>
+
+<ol>
+  <li><strong>ID</strong>: A unique ID is assigned to identify each asset. This will be used to cross-reference the asset with any threats or vulnerabilities that are identified.</li>
+  <li><strong>Name</strong>: A descriptive name that clearly identifies the asset.</li>
+  <li><strong>Description</strong>: A textual description of what the asset is and why it needs to be protected.</li>
+  <li><strong>Trust Levels</strong>: The level of access required to access the entry point is documented here. These will be cross-referenced with the trust levels defined in the next step.</li>
+</ol>
+
+<p>Example:</p>
+
+<blockquote>
+  <h2 id="assets-1">Assets</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Trust Levels</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td>
+        <td><strong>Library Users and Librarian</strong></td>
+        <td><strong>Assets relating to students, faculty members, and librarians.</strong></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>1.1</td>
+        <td>User Login Details</td>
+        <td>The login credentials that a student or a faculty member will use to log into the College Library website.</td>
+        <td>(2) User with Valid Login Credentials <br>(4) Librarian <br>(5) Database Server Administrator <br>(7) web server User Process <br>(8) Database Read User <br>(9) Database Read/Write User</td>
+      </tr>
+      <tr>
+        <td>1.2</td>
+        <td>Librarian Login Details</td>
+        <td>The login credentials that a Librarian will use to log into the College Library website.</td>
+        <td>(4) Librarian <br> (5) Database Server Administrator <br> (7) web server User Process <br> (8) Database Read User <br> (9) Database Read/Write User</td>
+      </tr>
+      <tr>
+        <td>1.3</td>
+        <td>Personal Data</td>
+        <td>The College Library website will store personal information relating to the students, faculty members, and librarians.</td>
+        <td>(4) Librarian <br>(5) Database Server Administrator <br>(6) Website Administrator <br>(7) web server User Process <br>(8) Database Read User <br>(9) Database Read/Write User</td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td><strong>System</strong></td>
+        <td><strong>Assets relating to the underlying system.</strong></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>2.1</td>
+        <td>Availability of College Library Website</td>
+        <td>The College Library website should be available 24 hours a day and can be accessed by all students, college faculty members, and librarians.</td>
+        <td>(5) Database Server Administrator <br>(6) Website Administrator</td>
+      </tr>
+      <tr>
+        <td>2.2</td>
+        <td>Ability to Execute Code as a web server User</td>
+        <td>This is the ability to execute source code on the web server as a web server user.</td>
+        <td>(6) Website Administrator <br>(7) web server User Process</td>
+      </tr>
+      <tr>
+        <td>2.3</td>
+        <td>Ability to Execute SQL as a Database Read User</td>
+        <td>This is the ability to execute SQL select queries on the database, and thus retrieve any information stored within the College Library database.</td>
+        <td>(5) Database Server Administrator <br>(8) Database Read User <br>(9) Database Read/Write User</td>
+      </tr>
+      <tr>
+        <td>2.4</td>
+        <td>Ability to Execute SQL as a Database Read/Write User</td>
+        <td>This is the ability to execute SQL. Select, insert, and update queries on the database and thus have read and write access to any information stored within the College Library database.</td>
+        <td>(5) Database Server Administrator <br>(9) Database Read/Write User</td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td><strong>Website</strong></td>
+        <td><strong>Assets relating to the College Library website.</strong></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>3.1</td>
+        <td>Login Session</td>
+        <td>This is the login session of a user to the College Library website. This user could be a student, a member of the college faculty, or a Librarian.</td>
+        <td>(2) User with Valid Login Credentials <br>(4) Librarian</td>
+      </tr>
+      <tr>
+        <td>3.2</td>
+        <td>Access to the Database Server</td>
+        <td>Access to the database server allows you to administer the database, giving you full access to the database users and all data contained within the database.</td>
+        <td>(5) Database Server Administrator</td>
+      </tr>
+      <tr>
+        <td>3.3</td>
+        <td>Ability to Create Users</td>
+        <td>The ability to create users would allow an individual to create new users on the system. These could be student users, faculty member users, and librarian users.</td>
+        <td>(4) Librarian <br>(6) Website Administrator</td>
+      </tr>
+      <tr>
+        <td>3.4</td>
+        <td>Access to Audit Data</td>
+        <td>The audit data shows all audit-able events that occurred within the College Library application by students, staff, and librarians.</td>
+        <td>(6) Website Administrator</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<h3 id="trust-levels">Trust Levels</h3>
+
+<p>Trust levels represent the access rights that the application will grant to external entities. The trust levels are cross-referenced with the entry points and assets. This allows us to define the access rights or privileges required at each entry point, and those required to interact with each asset.</p>
+
+<p>Trust levels are documented in the threat model as follows:</p>
+
+<ol>
+  <li><strong>ID</strong>: A unique number is assigned to each trust level. This is used to cross-reference the trust level with the entry points and
+assets.</li>
+  <li><strong>Name</strong>: A descriptive name that allows you to identify the external entities that have been granted this trust level.</li>
+  <li><strong>Description</strong>: A textual description of the trust level detailing the external entity who has been granted the trust level.</li>
+</ol>
+
+<p>Example:</p>
+
+<blockquote>
+  <h2 id="trust-levels-1">Trust Levels</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Anonymous Web User</td>
+        <td>A user who has connected to the college library website but has not provided valid credentials.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>User with Valid Login Credentials</td>
+        <td>A user who has connected to the college library website and has logged in using valid login credentials.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>User with Invalid Login Credentials</td>
+        <td>A user who has connected to the college library website and is attempting to log in using invalid login credentials.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Librarian</td>
+        <td>The librarian can create users on the library website and view their personal information.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Database Server Administrator</td>
+        <td>The database server administrator has read and write access to the database that is used by the college library website.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Website Administrator</td>
+        <td>The Website administrator can configure the college library website.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>web server User Process</td>
+        <td>This is the process/user that the web server executes code as and authenticates itself against the database server as.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Database Read User</td>
+        <td>The database user account used to access the database for read access.</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Database Read/Write User</td>
+        <td>The database user account used to access the database for read and write access.</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<h3 id="data-flow-diagrams">Data Flow Diagrams</h3>
+
+<p>All of the information collected allows us to accurately model the application through the use of Data Flow Diagrams (<a href="https://en.wikipedia.org/wiki/Data-flow_diagram">DFDs</a>). The <a href="https://en.wikipedia.org/wiki/Data-flow_diagram">DFDs</a> will allow us to gain a better understanding of the application by providing a visual representation of how the application processes data.</p>
+
+<p>Data flows show how data flows logically through the application, end to end. They allow the identification of affected components through critical points (e.g. data entering or leaving the system, storage of data) and the flow of control through these components.</p>
+
+<p>The focus of the <a href="https://en.wikipedia.org/wiki/Data-flow_diagram">DFDs</a> is on how data moves through the application and what happens to the data as it moves. <a href="https://en.wikipedia.org/wiki/Data-flow_diagram">DFDs</a> are hierarchical in structure, so they can be used to decompose the application into subsystems and lower-level subsystems. The high-level <a href="https://en.wikipedia.org/wiki/Data-flow_diagram">DFD</a> will allow us to clarify the scope of the application being modeled. The lower level iterations will allow us to focus on the specific processes involved when processing specific data.</p>
+
+<p>There are a number of symbols that are used in <a href="https://en.wikipedia.org/wiki/Data-flow_diagram">DFDs</a> for threat modeling. These are described below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/DFD_external_entity.gif" alt="Diagrama de Fluxo de Dados: Entidade Externa"></td>
+      <td>External Entity</td>
+      <td>The external entity shape is used to represent any entity outside the application that interacts with the application via an entry point.</td>
+    </tr>
+    <tr>
+      <td><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/DFD_process.gif" alt="Diagrama de Fluxo de Dados: Processo"></td>
+      <td>Process</td>
+      <td>The process shape represents a task that handles data within the application. The task may process the data or perform an action based on the data.</td>
+    </tr>
+    <tr>
+      <td><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/DFD_multiple_process.gif" alt="Diagrama de Fluxo de Dados: Múltiplos Processos"></td>
+      <td>Multiple Process</td>
+      <td>The multiple process shape is used to present a collection of subprocesses. The multiple process can be broken down into its subprocesses in another DFD.</td>
+    </tr>
+    <tr>
+      <td><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/DFD_data_store.gif" alt="Diagrama de Fluxo de Dados: Armazenamento de Dados"></td>
+      <td>Data Store</td>
+      <td>The data store shape is used to represent locations where data is stored. Data stores do not modify the data, they only store data.</td>
+    </tr>
+    <tr>
+      <td><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/DFD_data_flow.gif" alt="Diagrama de Fluxo de Dados: Fluxo de Dados"></td>
+      <td>Data Flow</td>
+      <td>The data flow shape represents data movement within the application. The direction of the data movement is represented by the arrow.</td>
+    </tr>
+    <tr>
+      <td><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/DFD_privilege_boundary.gif" alt="Diagrama de fluxo de dados: limite de privilégio"></td>
+      <td>Privilege Boundary</td>
+      <td>The privilege boundary (or trust boundary) shape is used to represent the change of trust levels as the data flows through the application. Boundaries show any location where the level of trust changes.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="example-diagrams">Example Diagrams</h3>
+
+<p><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Data_flow1.jpg" alt="Imagem: fluxo de dados1.jpg"></p>
+
+<p><em>Figure 1: Data Flow Diagram for the College Library Website.</em></p>
+
+<p><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Data_flow2.jpg" alt="Imagem: fluxo de dados2.jpg"></p>
+
+<p><em>Figure 2: User Login Data Flow Diagram for the College Library Website.</em></p>
+
+<h2 id="determine-and-rank-threats">Determine and Rank Threats</h2>
+
+<h3 id="threat-categorization">Threat Categorization</h3>
+
+<p>The first step in the determination of threats is adopting a threat categorization. A threat categorization provides a set of categories with corresponding examples so that threats can be systematically identified in the application in a structured and repeatable manner.</p>
+
+<h3 id="stride">STRIDE</h3>
+
+<p>A threat categorization such as <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a> is useful in the identification of threats by classifying attacker goals such as:</p>
+
+<ul>
+  <li><strong>S</strong>poofing</li>
+  <li><strong>T</strong>ampering</li>
+  <li><strong>R</strong>epudiation</li>
+  <li><strong>I</strong>nformation Disclosure</li>
+  <li><strong>D</strong>enial of Service</li>
+  <li><strong>E</strong>levation of Privilege</li>
+</ul>
+
+<p>A list of generic threats classified using <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a> is provided in the following table along with their security controls:</p>
+
+<h2 id="stride-threat-list">STRIDE Threat List</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Security Control</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Spoofing</td>
+      <td>Threat action aimed at accessing and use of another user’s credentials, such as username and password.</td>
+      <td>Authentication</td>
+    </tr>
+    <tr>
+      <td>Tampering</td>
+      <td>Threat action intending to maliciously change or modify persistent data, such as records in a database, and the alteration of data in transit between two computers over an open network, such as the Internet.</td>
+      <td>Integrity</td>
+    </tr>
+    <tr>
+      <td>Repudiation</td>
+      <td>Threat action aimed at performing prohibited operations in a system that lacks the ability to trace the operations.</td>
+      <td>Non-Repudiation</td>
+    </tr>
+    <tr>
+      <td>Information disclosure</td>
+      <td>Threat action intending to read a file that one was not granted access to, or to read data in transit.</td>
+      <td>Confidentiality</td>
+    </tr>
+    <tr>
+      <td>Denial of service</td>
+      <td>Threat action attempting to deny access to valid users, such as by making a web server temporarily unavailable or unusable.</td>
+      <td>Availability</td>
+    </tr>
+    <tr>
+      <td>Elevation of privilege</td>
+      <td>Threat action intending to gain privileged access to resources in order to gain unauthorized access to information or to compromise a system.</td>
+      <td>Authorization</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Threat lists based on the <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a> model are useful in the identification of threats with regards to the attacker goals. For example, if the threat scenario is attacking the login, would the attacker brute force the password to break the authentication? If the threat scenario is to try to elevate privileges to gain another user’s privileges, would the attacker try to perform <a href="https://owasp.org/www-community/attacks/Forced_browsing">forced browsing</a>?</p>
+
+<h3 id="threat-analysis">Threat Analysis</h3>
+
+<p>A prerequisite in the analysis of threats is the understanding of the generic definition of risk. Risk is a potential for loss determined by two factors: the likelihood, or probability, that an attack will occur; and the potential impact, or cost, of such an attack occurring. Risk is calculated as:</p>
+
+<p><em>(Probability that threat occurs) x (Cost to organization)</em></p>
+
+<p>From the perspective of risk management, threat modeling is a systematic and strategic approach for identifying and enumerating threats to an application environment with the objective of minimizing risk and potential impact.</p>
+
+<p>Threat analysis is the identification of threats to the application, and involves the analysis of each aspect of the application’s functionality, architecture, and design. It is important to identify and classify potential weaknesses that could lead to an exploit.</p>
+
+<p>From the defensive perspective, the identification of threats driven by security control categorization allows a threat analyst to focus on specific vulnerabilities. Typically, the process of threat identification involves going through iterative cycles where initially all the possible threats in the threat list that apply to each component are evaluated.</p>
+
+<p>At the next iteration, threats are further analyzed by exploring the attack paths, the root causes for the threat to be exploited (e.g. vulnerabilities, depicted as orange blocks below), and the necessary mitigation controls (e.g. countermeasures, depicted as green blocks below). A threat tree as shown below is useful to perform such threat analysis.</p>
+
+<p><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Threat_Graph.gif" alt="Gráfico de Ameaças"></p>
+
+<p><em>Figure 3: Threat Tree Diagram.</em></p>
+
+<p>Once common threats, vulnerabilities, and attacks are assessed, a more focused threat analysis should take into consideration use and abuse cases. By thoroughly analyzing the use scenarios, weaknesses can be identified that could lead to the realization of a threat. Abuse cases should also be identified. These abuse cases can illustrate how existing protective measures could be bypassed, or where a lack of such protection exists.</p>
+
+<p>A use and abuse case graph for authentication is shown below:</p>
+
+<p><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/UseAndMisuseCase.jpg" alt="Caso de uso e abuso"></p>
+
+<p><em>Figure 4: Use and Misuse Cases</em></p>
+
+<p>The outcome of threat analysis is a determination of the types of threats posed to each component of the decomposed system. This can be documented using a threat categorization such as <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a> or ASF, the use of threat trees to determine how the threat can be exposed by a vulnerability, and use and misuse cases to further validate the lack of any countermeasures for mitigation.</p>
+
+<h3 id="ranking-of-threats">Ranking of Threats</h3>
+
+<p>Threats can be ranked from the perspective of risk factors. By determining the risk factor posed by the various identified threats, it is possible to create a prioritized list of threats to support a risk mitigation strategy, such as prioritizing the threats to be mitigated first. Different risk factors can be used to rank threats as High, Medium, or Low risk. In general, threat risk models use different factors to model risks such as those shown below:</p>
+
+<p><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Riskfactors.JPG" alt="Fatores do modelo de risco"></p>
+
+<p><em>Figure 5: Ranking Risk Factors.</em></p>
+
+<h3 id="subjective-model-dread">Subjective Model: DREAD</h3>
+
+<p>In the Microsoft <a href="https://en.wikipedia.org/wiki/DREAD_(risk_assessment_model)">DREAD</a> risk assessment model, risk factorization allows the assignment of values to the different influencing factors of a threat. This provides a subjective process to rank threats. To determine the ranking of a threat, the threat analyst answers questions for each factor of risk, for example:</p>
+
+<ul>
+  <li><strong>D</strong>amage: How big would the damage be if the attack succeeded?</li>
+  <li><strong>R</strong>eproducibility: How easy is it to reproduce an attack?</li>
+  <li><strong>E</strong>xploitability: How much time, effort, and expertise is needed to exploit the threat?</li>
+  <li><strong>A</strong>ffected Users: If a threat were exploited, what percentage of users would be affected?</li>
+  <li><strong>D</strong>iscoverability: How easy is it for an attacker to discover this threat?</li>
+</ul>
+
+<p>A point system of numbers 1-10, representing low to high severity, is used to calculate a <a href="https://en.wikipedia.org/wiki/DREAD_(risk_assessment_model)">DREAD</a> score that can help compare one threat to another.</p>
+
+<p>Example:</p>
+
+<blockquote>
+  <h2 id="threat-malicious-user-views-confidential-information-of-students-faculty-members-and-librarians">Threat: Malicious user views confidential information of students, faculty members and librarians.</h2>
+
+  <ol>
+    <li><strong>Damage potential:</strong> Threat to reputation as well as financial and legal liability (8)</li>
+    <li><strong>Reproducibility:</strong> Fully reproducible (10)</li>
+    <li><strong>Exploitability:</strong> Require to be on the same subnet or have compromised a router (7)</li>
+    <li><strong>Affected users:</strong> Affects all users (10)</li>
+    <li><strong>Discoverability:</strong> Can be found out easily (10)</li>
+  </ol>
+
+  <p>Overall DREAD score for this threat: (8+10+7+10+10) / 5 = 9</p>
+</blockquote>
+
+<p>The <a href="https://en.wikipedia.org/wiki/DREAD_(risk_assessment_model)">DREAD</a> model does not have widespread use across the industry, as its ratings are subjective. Within an organization, however, models that employ subjective ranking can help to clarify priorities when addressing risk.</p>
+
+<h3 id="qualitative-risk-model">Qualitative Risk Model</h3>
+
+<p>A generic risk model considers risk as a calculation. Recall that risk is determined by the likelihood of an attack and the impact of that attack:</p>
+
+<p><em>(Probability that threat occurs) x (Cost to organization)</em></p>
+
+<p>The likelihood, or probability, can be determined by the ease of exploitation. This depends on the type of threat and the system characteristics, as well as considers any countermeasures that may already be in place.</p>
+
+<p>The following is a set of considerations for determining ease of exploitation:</p>
+
+<ol>
+  <li>Can an attacker exploit this remotely?</li>
+  <li>Does the attacker need to be authenticated?</li>
+  <li>Can the exploit be automated?</li>
+</ol>
+
+<p>The impact mainly depends on the damage potential and its extent, such as the number of components that may be affected by a threat.</p>
+
+<p>Questions to help determine the damage potential are:</p>
+
+<ol>
+  <li>Can an attacker completely take over and manipulate the system?</li>
+  <li>Can an attacker gain administration access to the system?</li>
+  <li>Can an attacker crash the system?</li>
+  <li>Can the attacker obtain access to sensitive information such as secrets or PII?</li>
+</ol>
+
+<p>Questions to help determine the number of components that are affected by a threat:</p>
+
+<ol>
+  <li>How many connected data sources and systems can be impacted?</li>
+  <li>How many layers into infrastructure components can the threat agent traverse?</li>
+</ol>
+
+<p>These examples help in the calculation of the overall risk values by assigning qualitative values such as High, Medium and Low to the likelihood and impact factors. In this case, using qualitative values, rather than numeric ones like in the case of the <a href="https://en.wikipedia.org/wiki/DREAD_(risk_assessment_model)">DREAD</a> model, help avoid the ranking becoming overly subjective.</p>
+
+<h2 id="determine-countermeasures-and-mitigation">Determine Countermeasures and Mitigation</h2>
+
+<p>The purpose of countermeasure identification is to determine if there is some kind of protective measure (e.g. security control, policies) that can prevent a threat from being realized. Vulnerabilities are then those threats that have no countermeasures. When threats have been categorized either with <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a> or ASF, it is possible to find appropriate countermeasures within the given category.</p>
+
+<p>Provided below is a brief and limited checklist which is by no means an exhaustive list for identifying countermeasures for specific threats.</p>
+
+<h3 id="asf-threat--countermeasures-examples">ASF Threat &amp; Countermeasures Examples</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Threat Type</th>
+      <th>Countermeasure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Authentication</td>
+      <td>1. Credentials and authentication tokens are protected with encryption in storage and transit <br>2. Protocols are resistant to brute force, dictionary, and replay attacks <br>3. Strong password policies are enforced <br>4. Trusted server authentication is used instead of SQL authentication <br>5. Passwords are stored with salted hashes <br>6. Password resets do not reveal password hints and valid usernames <br>7. Account lockouts do not result in a denial of service attack</td>
+    </tr>
+    <tr>
+      <td>Authorization</td>
+      <td>1. Strong ACLs are used for enforcing authorized access to resources <br>2. Role-based access controls are used to restrict access to specific operations <br>3. The system follows the principle of least privilege for user and service accounts <br>4. Privilege separation is correctly configured within the presentation, business and data access layers</td>
+    </tr>
+    <tr>
+      <td>Configuration Management</td>
+      <td>1. Least privileged processes are used and service accounts with no administration capability <br>2. Auditing and logging of all administration activities is enabled <br>3. Access to configuration files and administrator interfaces is restricted to administrators</td>
+    </tr>
+    <tr>
+      <td>Data Protection in Storage and Transit</td>
+      <td>1. Standard encryption algorithms and correct key sizes are being used <br>2. Hashed message authentication codes (HMACs) are used to protect data integrity <br>3. Secrets (e.g. keys, confidential data ) are cryptographically protected both in transport and in storage <br>4. Built-in secure storage is used for protecting keys <br>5. No credentials and sensitive data are sent in clear text over the wire</td>
+    </tr>
+    <tr>
+      <td>Data Validation / Parameter Validation</td>
+      <td>1. Data type, format, length, and range checks are enforced <br>2. All data sent from the client is validated <br>3. No security decision is based upon parameters (e.g. URL parameters) that can be manipulated <br>4. Input filtering via allow list validation is used <br>5. Output encoding is used</td>
+    </tr>
+    <tr>
+      <td>Error Handling and Exception Management</td>
+      <td>1. All exceptions are handled in a structured manner <br>2. Privileges are restored to the appropriate level in case of errors and exceptions <br>3. Error messages are scrubbed so that no sensitive information is revealed to the attacker</td>
+    </tr>
+    <tr>
+      <td>User and Session Management</td>
+      <td>1. No sensitive information is stored in clear text in the cookie <br>2. The contents of the authentication cookies is encrypted <br>3. Cookies are configured to expire <br>4. Sessions are resistant to replay attacks <br>5. Secure communication channels are used to protect authentication cookies <br>6. User is forced to re-authenticate when performing critical functions <br>7. Sessions are expired at logout</td>
+    </tr>
+    <tr>
+      <td>Auditing and Logging</td>
+      <td>1. Sensitive information (e.g. passwords, PII) is not logged <br>2. Access controls (e.g. ACLs) are enforced on log files to prevent un-authorized access <br>3. Integrity controls (e.g. signatures) are enforced on log files to provide non-repudiation <br>4. Log files provide for audit trail for sensitive operations and logging of key events <br>5. Auditing and logging is enabled across the tiers on multiple servers</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>When using <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a>, the following threat-mitigation table can be used to identify techniques that can be employed to mitigate the threats.</p>
+
+<h3 id="stride-threat--mitigation-techniques">STRIDE Threat &amp; Mitigation Techniques</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Threat Type</th>
+      <th>Mitigation Techniques</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Spoofing Identity</td>
+      <td>1. Appropriate authentication <br>2. Protect secret data <br>3. Don’t store secrets</td>
+    </tr>
+    <tr>
+      <td>Tampering with data</td>
+      <td>1. Appropriate authorization <br>2. Hashes <br>3. MACs <br>4. Digital signatures <br>5. Tamper resistant protocols</td>
+    </tr>
+    <tr>
+      <td>Repudiation</td>
+      <td>1. Digital signatures <br>2. Timestamps <br>3. Audit trails</td>
+    </tr>
+    <tr>
+      <td>Information Disclosure</td>
+      <td>1. Authorization <br>2. Privacy-enhanced protocols <br>3. Encryption <br>4. Protect secrets <br>5. Don’t store secrets</td>
+    </tr>
+    <tr>
+      <td>Denial of Service</td>
+      <td>1. Appropriate authentication <br>2. Appropriate authorization <br>3. Filtering <br>4. Throttling <br>5. Quality of service</td>
+    </tr>
+    <tr>
+      <td>Elevation of privilege</td>
+      <td>1. Run with least privilege</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Once threats and corresponding countermeasures are identified, it is possible to derive a threat profile with the following criteria:</p>
+
+<ol>
+  <li><strong>Non mitigated threats:</strong> Threats which have no countermeasures and represent vulnerabilities that can be fully exploited and cause an impact.</li>
+  <li><strong>Partially mitigated threats:</strong> Threats partially mitigated by one or more countermeasures and can only partially be exploited to cause a limited impact.</li>
+  <li><strong>Fully mitigated threats:</strong> These threats have appropriate countermeasures in place and do not expose vulnerabilities.</li>
+</ol>
+
+<h2 id="complementing-code-review">Complementing Code Review</h2>
+
+<p>Threat modeling is not an approach to reviewing code, but it does complement the security code review process. The inclusion of threat modeling early on in the Software Development Life Cycle (<a href="https://en.wikipedia.org/wiki/Systems_development_life_cycle">SDLC</a>) can help to ensure that applications are being developed with appropriate security threat mitigations from the very beginning. This, combined with the documentation produced as part of the threat modeling process, can give code reviewers a greater understanding of the system. This allows the reviewer to see where the entry points to the application are and the associated threats with each entry point.</p>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Quando a análise do código-fonte é realizada fora do </font></font><a href="https://en.wikipedia.org/wiki/Systems_development_life_cycle"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SDLC</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> , como em aplicativos existentes, a modelagem de ameaças ajuda a esclarecer a complexidade da análise do código-fonte. </font><font style="vertical-align: inherit;">Ele promove uma abordagem de profundidade em vez de uma abordagem de amplitude. </font><font style="vertical-align: inherit;">Em outras palavras, em vez de revisar todo o código-fonte com o mesmo foco, você pode priorizar a revisão do código de segurança dos componentes em que a modelagem de ameaças indica ameaças de alto risco.</font></font></p>
+
+
+          </section>
+          
+
+          
+          
+          
+          
+          
+          
+          
+       </div>
+       <hr>
+       <div class="repo"><a href="https://github.com/OWASP/www-community/blob/master/pages/Threat_Modeling_Process.md"><div class="reset-3c756112--menuItemIcon-206eb252" style="float: left;"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 438.549 438.549" stroke="none" class="icon-7f6730be--text-3f89f380"><g><path d="M409.132 114.573c-19.608-33.596-46.205-60.194-79.798-79.8-33.598-19.607-70.277-29.408-110.063-29.408-39.781 0-76.472 9.804-110.063 29.408-33.596 19.605-60.192 46.204-79.8 79.8C9.803 148.168 0 184.854 0 224.63c0 47.78 13.94 90.745 41.827 128.906 27.884 38.164 63.906 64.572 108.063 79.227 5.14.954 8.945.283 11.419-1.996 2.475-2.282 3.711-5.14 3.711-8.562 0-.571-.049-5.708-.144-15.417a2549.81 2549.81 0 0 1-.144-25.406l-6.567 1.136c-4.187.767-9.469 1.092-15.846 1-6.374-.089-12.991-.757-19.842-1.999-6.854-1.231-13.229-4.086-19.13-8.559-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-.951-2.568-2.098-3.711-3.429-1.142-1.331-1.997-2.663-2.568-3.997-.572-1.335-.098-2.43 1.427-3.289 1.525-.859 4.281-1.276 8.28-1.276l5.708.853c3.807.763 8.516 3.042 14.133 6.851 5.614 3.806 10.229 8.754 13.846 14.842 4.38 7.806 9.657 13.754 15.846 17.847 6.184 4.093 12.419 6.136 18.699 6.136 6.28 0 11.704-.476 16.274-1.423 4.565-.952 8.848-2.383 12.847-4.285 1.713-12.758 6.377-22.559 13.988-29.41-10.848-1.14-20.601-2.857-29.264-5.14-8.658-2.286-17.605-5.996-26.835-11.14-9.235-5.137-16.896-11.516-22.985-19.126-6.09-7.614-11.088-17.61-14.987-29.979-3.901-12.374-5.852-26.648-5.852-42.826 0-23.035 7.52-42.637 22.557-58.817-7.044-17.318-6.379-36.732 1.997-58.24 5.52-1.715 13.706-.428 24.554 3.853 10.85 4.283 18.794 7.952 23.84 10.994 5.046 3.041 9.089 5.618 12.135 7.708 17.705-4.947 35.976-7.421 54.818-7.421s37.117 2.474 54.823 7.421l10.849-6.849c7.419-4.57 16.18-8.758 26.262-12.565 10.088-3.805 17.802-4.853 23.134-3.138 8.562 21.509 9.325 40.922 2.279 58.24 15.036 16.18 22.559 35.787 22.559 58.817 0 16.178-1.958 30.497-5.853 42.966-3.9 12.471-8.941 22.457-15.125 29.979-6.191 7.521-13.901 13.85-23.131 18.986-9.232 5.14-18.182 8.85-26.84 11.136-8.662 2.286-18.415 4.004-29.263 5.146 9.894 8.562 14.842 22.077 14.842 40.539v60.237c0 3.422 1.19 6.279 3.572 8.562 2.379 2.279 6.136 2.95 11.276 1.995 44.163-14.653 80.185-41.062 108.068-79.226 27.88-38.161 41.825-81.126 41.825-128.906-.01-39.771-9.818-76.454-29.414-110.049z"></path></g></svg><span style="padding-left:8px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editar no GitHub</font></font></span></div></a></div>
+
+          <div class="github-buttons">
+    <span></span>
+    <span></span>
+ </div>
+
+          <div class="sidebar" role="complementary">
+    
+
+    
+    
+       
+
+
+
+  
+  <div class="owasp-sidebar-top">
+    <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">A OWASP </font></font><sup><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">®</font></font></sup><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Foundation</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> trabalha para melhorar a segurança do software por meio de seus projetos de software de código aberto liderados pela comunidade, centenas de capítulos em todo o mundo, dezenas de milhares de membros e hospedando conferências locais e globais.
+</font></font></div>
+
+
+  
+  
+  
+
+  <div class="owasp-sidebar-bottom">
+   <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Próximos eventos globais da OWASP</font></font></h3>
+   <div id="global-event-div"><ul><li><a href="https://dublin.globalappsec.org/" target="_blank rel=" noopener"=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">OWASP Global AppSec Dublin 2023</font></font></a><ul><li style="list-style-type: circle;margin-top: 0px;padding:0px;margin-left:16px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">13 a 16 de fevereiro de 2023</font></font></li></ul></li><li><a href="https://owasp.org/events/" target="_blank rel=" noopener"="">OWASP Global AppSec Washington DC 2023</a><ul><li style="list-style-type: circle;margin-top: 0px;padding:0px;margin-left:16px;">Coming Soon!</li></ul></li><li><a href="https://owasp.org/events/" target="_blank rel=" noopener"="">OWASP Global AppSec San Francisco 2024</a><ul><li style="list-style-type: circle;margin-top: 0px;padding:0px;margin-left:16px;">September 23-27, 2024</li></ul></li><li><a href="https://owasp.org/events/" target="_blank rel=" noopener"="">OWASP Global AppSec San Francisco 2026</a><ul><li style="list-style-type: circle;margin-top: 0px;padding:0px;margin-left:16px;">November 2-6, 2026</li></ul></li></ul></div>
+</div>
+
+<script type="text/javascript">
+   var events = [];
+   $(function () {
+      eventsyml = YAML.load('https://owasp.org/assets/sitedata/events.yml');
+
+      $.each(eventsyml, function (index) {
+         if (this.category == 'Global') {
+            for (e in this.events) {
+               events.push(this.events[e]);
+            }
+         }
+      });
+
+      if (events.length > 0) {
+         var htmlstring = "<ul>";
+         for (evnt in events) {
+            if (events[evnt].url)
+               htmlstring += '<li><a href="' + events[evnt].url
+            else
+               htmlstring += '<li><a href="https://owasp.org/events/'
+
+            htmlstring += '" target="_blank rel="noopener">' + events[evnt].name + '</a>';
+
+            if (typeof events[evnt].dates === 'undefined') {
+               events[evnt].dates = 'TBA';
+            }
+
+            htmlstring += "<ul><li style='list-style-type: circle;margin-top: 0px;padding:0px;margin-left:16px;'>" + events[evnt].dates + "</li></ul></li>";
+         }
+         htmlstring += "</ul>";
+
+         $("#global-event-div").html(htmlstring);
+      }
+   });
+</script>
+
+  <!--<div>
+    <h3>OWASP News & Opinions</h3>
+    <ul>
+    	
+    </ul>	
+  </div>-->
+</div>
+
+      </div>
+    </main>
+    <footer>
+  
+  <section class="member">
+
+  <script type="text/javascript">
+    var members = [];
+    var plat_indices = [];
+    var gold_indices = [];
+    var other_indices = [];
+
+    function get_next_member(members, indexUsed){
+      // random 6
+      // 0 to 2 = Platinum (.2 > Other)
+      // 3 to 4 = Gold (.1 > Other)
+      // 5 = Other  
+      member = null;
+      chosenIndex = -1;
+      var pick = Math.floor(Math.random() * 100);      
+      var randomIndex = -1;
+      if(pick < 44){
+        // pick a platinum member
+        randomIndex = Math.floor(Math.random() * plat_indices.length);
+        pIndex = plat_indices[randomIndex];            
+        cycleIndex = randomIndex
+        while(chosenIndex == -1)
+        {
+          randomIndex++;
+          if(indexUsed.indexOf(pIndex)== -1){
+            chosenIndex = pIndex;
+            
+          }else if(randomIndex >= plat_indices.length){
+            randomIndex = 0;
+            
+          }
+          if (randomIndex == cycleIndex){ // we could not find a plat member not already in the list....            
+            break;
+          }
+        }
+      }
+      if (chosenIndex == -1 && pick < 77) {
+        // pick a gold member
+        randomIndex = Math.floor(Math.random() * gold_indices.length);
+        pIndex = gold_indices[randomIndex];            
+        cycleIndex = randomIndex
+        while(chosenIndex == -1)
+        {
+          randomIndex++;
+          if(indexUsed.indexOf(pIndex)== -1){
+            chosenIndex = pIndex;
+            
+          }else if(randomIndex >= gold_indices.length){
+            randomIndex = 0;
+            
+          }
+          if (randomIndex == cycleIndex){ // we could not find a plat member not already in the list....            
+            break;
+          }
+        }
+      }
+      if (chosenIndex == -1){
+        // pick an other member
+        randomIndex = Math.floor(Math.random() * other_indices.length);
+        pIndex = other_indices[randomIndex];            
+        cycleIndex = randomIndex
+        while(chosenIndex == -1)
+        {
+          randomIndex++;
+          if(indexUsed.indexOf(pIndex)== -1){
+            chosenIndex = pIndex;
+            
+          }else if(randomIndex >= other_indices.length){
+            randomIndex = 0;
+            
+          }
+          if (randomIndex == cycleIndex){ // we could not find a plat member not already in the list....            
+            break;
+          }
+        }
+      }    
+      if(chosenIndex >= 0){          
+        member = members[chosenIndex];
+        indexUsed.push(chosenIndex);
+        var membertype = 'not a member';
+        if(member.member && (member.membertype == 1 || !member.membertype))
+          membertype = 'silver member';
+        else if(member.member && member.membertype == 2)
+          membertype = 'platinum member';
+        else if(member.member && member.membertype == 3)
+          membertype = 'gold member';
+        else if(member.member && member.membertype)
+          membertype = member.membertype;        
+      }
+      return member;      
+    }
+
+    $(function() {  
+      var corp_members = YAML.load('https://owasp.org/assets/sitedata/corp_members.yml');
+      $.each(corp_members, function (index) {
+          index = members.push(this) - 1;  
+          if(this.member && this.membertype == 3)
+            gold_indices.push(index);
+          else if (this.member && this.membertype == 2)
+            plat_indices.push(index);
+          else
+            other_indices.push(index);        
+        });
+
+        var indexUsed = [];
+
+        var counter = 0;
+        var numberOfImages = 9;
+        var member = get_next_member(members, indexUsed);
+        htmlstring = '<h2>Spotlight: ' + member["name"] + '</h2>';
+        htmlstring += '<a href="'+ member["url"] + '" rel="sponsored nopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="https://owasp.org' + member["image"] + '" alt="image" /></a>';
+        htmlstring += '<p>' + member["description"] + '</p>';
+        $(".member-spotlight").html(htmlstring);
+
+        if(members.length > 0)
+        {
+          var htmlstring = "";
+          while (counter < numberOfImages)
+          {
+            member = get_next_member(members, indexUsed)
+            if (member)
+            {
+                counter++;
+                htmlstring += '<a href="'+ member["url"] + '" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="https://owasp.org' + member["image"] + '" alt="image"/></a>';                                
+            }
+          }
+
+          $("#corp_member_div").html(htmlstring);
+         
+          
+        }
+    });
+  </script>
+  <div class="member-wrapper">
+    <section class="member-spotlight"><h2>Spotlight: Coalfire</h2><a href="http://coalfire.com/" rel="sponsored nopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Coalfire.png" alt="imagem"></a><p>When it comes to securing their businesses’ future, leading cloud infrastructure providers, SaaS companies, and enterprises turn to Coalfire. We are the cybersecurity advisor that combines extensive cloud expertise, advanced technology, and innovative approaches to empower our clients to strengthen their security posture and secure their digital transformations.</p></section>
+    <section class="member-list">
+      <h2>Corporate Supporters</h2>
+      <div id="corp_member_div"><a href="https://iriusrisk.com/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/IriusRiskNEWlogo.png" alt="imagem"></a><a href="https://www.bloomberg.com/company/values/tech-at-bloomberg/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Bloomberg.png" alt="imagem"></a><a href="https://www.bionic.ai/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/bionic_logo_1.png" alt="imagem"></a><a href="https://www.intruder.io/?utm_source=owasp" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/Intruder.png" alt="imagem"></a><a href="https://www.crest-approved.org/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/New_CREST_2022.jpeg" alt="imagem"></a><a href="https://www.corellium.com/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/corelliumlogofulldark.png" alt="imagem"></a><a href="http://grammarly.com/security" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/GrammarlyLogo.png" alt="imagem"></a><a href="http://apiiro.com/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/apiiro_logo_for_owasp.png" alt="imagem"></a><a href="http://contrastsecurity.com/" class="member-logo" rel="sponsored noopener noreferrer" target="_blank" onclick="handleOutboundLinkClicks(event);"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/contrast_logo_rgb.png" alt="imagem"></a></div>
+      <div class="member-cta">
+        <a class="callout-link" href="https://owasp.org/supporters">Become a corporate supporter</a>
+      </div>
+    </section>
+  </div>
+</section>
+
+  
+  <section class="footer-wrapper">
+    <section class="social">
+<a href="https://owasp.org/slack/invite" aria-label="grupo de folga" target="_blank" rel="noopener noreferrer"><i class="fa fa-lg fa-slack"></i></a>
+<a href="https://www.facebook.com/OWASPFoundation" aria-label="grupo do facebook" target="_blank" rel="noopener noreferrer"><i class="fa fa-lg fa-facebook-square"></i></a>
+<a href="https://twitter.com/owasp" aria-label="conta do Twitter" target="_blank" rel="noopener noreferrer"><i class="fa fa-lg fa-twitter"></i></a>
+<a href="https://www.linkedin.com/company/owasp/" aria-label="conta vinculada" target="_blank" rel="noopener noreferrer"><i class="fa fa-lg fa-linkedin"></i></a>
+<a href="https://www.youtube.com/user/OWASPGLOBAL" aria-label="conta do youtube" target="_blank" rel="noopener noreferrer"><i class="fa fa-lg fa-youtube-square"></i></a>
+</section>
+
+    <nav class="bot-nav" role="navigation" aria-label="navegação secundária">
+      <ul>
+        <li><a href="https://owasp.org/">HOME</a></li>
+        <li><a href="https://owasp.org/projects/">PROJECTS</a></li>
+        <li><a href="https://owasp.org/chapters/">CHAPTERS</a></li>
+        <li><a href="https://owasp.org/events/">EVENTS</a></li>
+        <li><a href="https://owasp.org/about/">ABOUT</a></li>
+        <li><a href="https://owasp.org/www-policy/operational/privacy">PRIVACY</a></li>
+        <li><a href="https://owasp.org/sitemap/">SITEMAP</a></li>
+        <li><a href="https://owasp.org/contact/">CONTACT</a></li>
+      </ul>
+    </nav>
+    <p class="disclaimer"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        OWASP, Open Web Application Security Project e Global AppSec são marcas registradas e AppSec Days, AppSec California, AppSec Cali, SnowFROC, LASCON e o logotipo OWASP são marcas comerciais da OWASP Foundation, Inc. A menos que especificado de outra forma, todo o conteúdo do site é Creative Commons Attribution-ShareAlike v4.0 e fornecido sem garantia de serviço ou precisão. </font><font style="vertical-align: inherit;">Para obter mais informações, consulte nossa </font></font><a href="https://owasp.org/www-policy/operational/general-disclaimer.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Isenção de responsabilidade geral</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> . </font><font style="vertical-align: inherit;">A OWASP não endossa ou recomenda produtos ou serviços comerciais, permitindo que nossa comunidade permaneça neutra quanto a fornecedores com a sabedoria coletiva das melhores mentes em segurança de software em todo o mundo. </font><font style="vertical-align: inherit;">Copyright 2022, OWASP Foundation, Inc.      
+    </font></font></p>
+  </section>
+</footer><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./Processo de Modelagem de Ameaças _ Fundação OWASP_files/translate_24dp.png" width="20" height="20" alt="Google Tradutor"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Texto original</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Sugerir uma tradução melhor</span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+
+  
+
+
+
+<div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>
